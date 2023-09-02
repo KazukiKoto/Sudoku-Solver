@@ -1,0 +1,1 @@
+Created this as a starting point for projects going forwards after following recommendations to develop this project. After this I will push my own ideas onto this project including a GUI to input your own sudoku game or a randomly generated game.
