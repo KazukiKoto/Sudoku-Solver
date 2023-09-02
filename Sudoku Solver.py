@@ -13,8 +13,8 @@ def Sudoku_Solver(SudokuGame):
                 SudokuGame[int(EmptyCell[0])][int(EmptyCell[2])] = 0 #Mark cell ready for backtrack
         return False
     else: #When no empty cells can be found
-        for i in range(9):
-            print(SudokuGame[i]) #Prints Sudoku Game row by row     
+        root.destroy()
+        SudokuUI(SudokuGame)  
 
 def FindEmptyCell(SudokuGame):
     for y in range (9):
@@ -33,10 +33,8 @@ def CheckIfValid(Pos,SudokuGame,curnum):
     for i in range (9): #For every cell in column
         if SudokuGame[i][Posx] == curnum and Posy != i: #If cell contains the number being checked
             return False #Do not change value
-    Squarey = Posy // 3 #Finds y of current Sudoku square
-    Squarex = Posx // 3 #Finds x of current Sudoku square
-    Starty = Squarey*3 #Finds starting y
-    Startx = Squarex*3 #Finds starting x
+    Starty = (Posy // 3)*3 #Floor division to find square then multiplies to find starting
+    Startx = (Posx // 3)*3 #Floor division to find square then multiplies to find starting
     for y in range (3): 
         for x in range (3): 
             if SudokuGame[Starty+y][Startx+x] == curnum and (Starty+y) != Posy and (Startx+x) != Posx: #Check if cell contains number being checked
@@ -45,8 +43,33 @@ def CheckIfValid(Pos,SudokuGame,curnum):
     
 #########################################################Tkinter
 
+class SudokuCell:
+    def __init__(self, y, x,SudokuGame):
+        self.y=y
+        self.x=x
+        num=SudokuGame[y][x]
+        Cell = tkinter.Button(root, text = (str(num)), command = lambda:[UpdateValue(num,y,x,SudokuGame)])
+        Cell.grid(row=y, column=x)
+        
 def SudokuUI(SudokuGame):
+    global root
+    root=tkinter.Tk()
+    root.geometry("155x275+100+100")
+    for y in range (9):
+        for x in range (9):
+            SudokuCell(y,x,SudokuGame)
+    SolveButton = tkinter.Button(root, text = "Solve", command = lambda:[Sudoku_Solver(SudokuGame)])
+    SolveButton.grid(row = 9, column = 0, columnspan=9)
+    root.mainloop()
     
+def UpdateValue(num,y,x,SudokuGame):
+    if num!=9:
+        num=num+1
+    else:
+        num=0
+    SudokuGame[y][x]=(num)
+    root.destroy()
+    SudokuUI(SudokuGame)
     
 #########################################################Main Code
     
@@ -61,5 +84,5 @@ SudokuGame = [[0,0,0,2,6,0,7,0,1],
               [0,0,9,3,0,0,0,7,4],
               [0,4,0,0,5,0,0,3,6],
               [7,0,3,0,1,8,0,0,0]] #Defining Game to be solved
-tkinter.mainloop()
-Sudoku_Solver(SudokuGame) #Calls solver
+#Sudoku_Solver(SudokuGame) #Calls solver
+SudokuUI(SudokuGame)
