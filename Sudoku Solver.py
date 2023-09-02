@@ -43,7 +43,14 @@ def CheckIfValid(Pos,SudokuGame,curnum):
                 return False #Do not change value
     return True #Change value
     
+#########################################################Tkinter
+
+def SudokuUI(SudokuGame):
+    
+    
 #########################################################Main Code
+    
+
     
 SudokuGame = [[0,0,0,2,6,0,7,0,1],
               [6,8,0,0,7,0,0,9,0],
@@ -54,4 +61,5 @@ SudokuGame = [[0,0,0,2,6,0,7,0,1],
               [0,0,9,3,0,0,0,7,4],
               [0,4,0,0,5,0,0,3,6],
               [7,0,3,0,1,8,0,0,0]] #Defining Game to be solved
+tkinter.mainloop()
 Sudoku_Solver(SudokuGame) #Calls solver
