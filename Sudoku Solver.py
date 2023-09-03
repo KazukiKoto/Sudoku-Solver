@@ -44,36 +44,34 @@ def CheckIfValid(Pos,SudokuGame,curnum):
 #########################################################Tkinter
 
 class SudokuCell:
-    def __init__(self, y, x,SudokuGame):
-        self.y=y
-        self.x=x
-        num=SudokuGame[y][x]
-        Cell = tkinter.Button(root, text = (str(num)), command = lambda:[UpdateValue(num,y,x,SudokuGame)])
-        Cell.grid(row=y, column=x)
+    def __init__(self, y, x,SudokuGame): #Constructor for cell class object
+        self.y=y #Y co-ordinate on board
+        self.x=x #X co-ordinate on board
+        num=SudokuGame[y][x] #Value of the cell
+        Cell = tkinter.Button(root, text = (str(num)), command = lambda:[UpdateValue(num,y,x,SudokuGame)]) #Creation of tkinter button element with ability to increase its value on click
+        Cell.grid(row=y, column=x) #Place button in grid
         
 def SudokuUI(SudokuGame):
     global root
-    root=tkinter.Tk()
-    root.geometry("155x275+100+100")
+    root=tkinter.Tk() 
+    root.geometry("155x275+100+100") #Uses a Fixed window position
     for y in range (9):
         for x in range (9):
-            SudokuCell(y,x,SudokuGame)
-    SolveButton = tkinter.Button(root, text = "Solve", command = lambda:[Sudoku_Solver(SudokuGame)])
-    SolveButton.grid(row = 9, column = 0, columnspan=9)
-    root.mainloop()
+            SudokuCell(y,x,SudokuGame) #Call appropriate number of cells
+    SolveButton = tkinter.Button(root, text = "Solve", command = lambda:[Sudoku_Solver(SudokuGame)]) #Creates button to call the solver
+    SolveButton.grid(row = 9, column = 0, columnspan=9) #Places button in grid
+    root.mainloop() 
     
 def UpdateValue(num,y,x,SudokuGame):
-    if num!=9:
+    if num!=9: #Increases value by 1 if value isnt 9
         num=num+1
-    else:
+    else: #Only numbers 1-9 are valid so prevents numbers larger than 9
         num=0
     SudokuGame[y][x]=(num)
-    root.destroy()
+    root.destroy() #Destroys tkinter UI then calls new UI with updated numbers
     SudokuUI(SudokuGame)
     
 #########################################################Main Code
-    
-
     
 SudokuGame = [[0,0,0,0,0,0,0,0,0],
               [0,0,0,0,0,0,0,0,0],
@@ -84,5 +82,4 @@ SudokuGame = [[0,0,0,0,0,0,0,0,0],
               [0,0,0,0,0,0,0,0,0],
               [0,0,0,0,0,0,0,0,0],
               [0,0,0,0,0,0,0,0,0]] #Defining Game to be solved
-#Sudoku_Solver(SudokuGame) #Calls solver
 SudokuUI(SudokuGame)
