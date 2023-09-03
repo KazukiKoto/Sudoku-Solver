@@ -1,5 +1,4 @@
 import tkinter
-import math
 
 ######################################################################Sudoku Solver
 def Sudoku_Solver(SudokuGame):
